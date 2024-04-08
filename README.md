@@ -1,78 +1,158 @@
-# Series Queues with infinite capacity - Open Jackson Network
-# Developed by: Kailash Kumar S
-# Register number: 212223220041
-## Aim :
-To find (a) average number of materials in the system (b) average number of materials in the each conveyor of (c) waiting time of each material in the system (d) waiting time of each material in each conveyor, if the arrival  of materials follow Poisson process with the mean interval time 12 seconds, service time of  lathe machine in series follow exponential distribution  with service time  1 second, 1.5 seconds and 1.3 seconds respectively and average service time of robot is 7 seconds.
+# Stock Price Prediction
 
-## Software required :
-Visual components and Python
+## AIM
 
-## Theory
+To develop a Recurrent Neural Network model for stock price prediction.
 
-![image](https://user-images.githubusercontent.com/103921593/203239736-7b81f599-71a8-4ae7-b63e-5d98acd9ea54.png)
+## Problem Statement and Dataset
 
+## DESIGN STEPS
 
-## Procedure :
+### STEP 1:
 
-![image](https://user-images.githubusercontent.com/103921593/203239789-bc870dce-6727-487b-a0e2-4fc3f5114889.png)
+Import the necessary tensorflow modules
 
+### STEP 2:
 
-## Experiment:
+Load the stock dataset.
 
-![image](https://github.com/Sanjushri13/Open-Jacson-Networks/assets/164732231/28ce3a59-a05e-4d74-93e6-94c649da43f0)
+### STEP 3:
 
-![image](https://github.com/Sanjushri13/Open-Jacson-Networks/assets/164732231/6fa98801-bc32-4f1c-a02c-83ce1735ff27)
+Fit the model and then predict.
 
+## PROGRAM
 
-## Program
+**Name: Kailash Kumar S**
+
+**Register number: 212223220041**
+## Importing modules
 ````python
-# Developed by: Kailash Kumar S
-# Register number: 212223220041
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+from keras import layers
+from keras.models import Sequential
+````
+## Loading the training dataset
+````python
+dataset_train = pd.read_csv('trainset.csv')
+````
+## Reading only columns
+````python
+dataset_train.columns
+````
+## Displaying the first five rows of the dataset
+````python
+dataset_train.head()
+````
+## Selecting all rows and the column with index 1
+````python
+train_set = dataset_train.iloc[:,1:2].values
+````
+## Displaying the type of the training dataset
+````python
+type(train_set)
+````
+## Displaying the shape of the training dataset
+````python
+train_set.shape
+````
+## Scaling the dataset using MinMaxScaler
+````python
+sc = MinMaxScaler(feature_range=(0,1))
+training_set_scaled = sc.fit_transform(train_set)
+````
+## Displaying the shape of the scaled training data set
+````python
+training_set_scaled.shape
+````
+````python
+X_train_array = []
+y_train_array = []
+for i in range(60, 1259):
+  X_train_array.append(training_set_scaled[i-60:i,0])
+  y_train_array.append(training_set_scaled[i,0])
+X_train, y_train = np.array(X_train_array), np.array(y_train_array)
+X_train1 = X_train.reshape((X_train.shape[0], X_train.shape[1],1))
 
-arr_time=float(input("Enter the mean inter arrival time of objects from Feeder (in secs): "))
-ser_time1=float(input("Enter the mean  inter service time of Lathe Machine 1 (in secs) :  "))
-ser_time2=float(input("Enter the mean  inter service time of Lathe Machine 2 (in secs) :  "))
-ser_time3=float(input("Enter the mean  inter service time of Lathe Machine 3 (in secs) :  "))
-Robot_time=float(input("Enter the Additional time taken for the Robot (in secs) :  "))
-lam=1/arr_time
-mu1=1/(ser_time1+Robot_time)
-mu2=1/(ser_time2+Robot_time)
-mu3=1/(ser_time3+Robot_time)
-print("-----------------------------------------------------------------------")
-print("Series Queues with infinite capacity- Open Jackson Network")
-print("-----------------------------------------------------------------------")
-if (lam <  mu1) and (lam <  mu2) and (lam <  mu3):
-    Ls1=lam/(mu1-lam)
-    Ls2=lam/(mu2-lam)
-    Ls3=lam/(mu3-lam)
-    Ls=Ls1+Ls2+Ls3
-    Lq1=Ls1-lam/mu1
-    Lq2=Ls2-lam/mu2
-    Lq3=Ls3-lam/mu3
-    Wq1=Lq1/lam
-    Wq2=Lq2/lam
-    Wq3=Lq3/lam
-    Ws=Ls/(3*lam)
-    print("Average number of objects in the system S1 : %0.2f "%Ls1)
-    print("Average number of objects in the system S2 : %0.2f "%Ls2)
-    print("Average number of objects in the system S3 : %0.2f "%Ls3)
-    print("Average number of objects in the overall system    : %0.2f "%Ls)
-    print("Average number of objects in the conveyor S1  :  %0.2f "%Lq1)
-    print("Average number of objects in the conveyor S2  :  %0.2f "%Lq2)
-    print("Average number of objects in the conveyor S3  :  %0.2f "%Lq3)
-    print("Average waiting time of an object in the conveyor S1 : %0.2f secs"%Wq1)
-    print("Average waiting time of an object in the conveyor S2 : %0.2f secs"%Wq2)
-    print("Average waiting time of an object in the conveyor S3 : %0.2f secs"%Wq3)
-else:
-    print("Warning! Objects Over flow will happen in the conveyor")
-print("----------------------------------------------------------------------")
+X_train.shape
+length = 60
+n_features = 1
+````
+## Creating the model
+````python
+model = Sequential()
+model.add(layers.SimpleRNN(50, input_shape=(length, n_features)))
+model.add(layers.Dense(1))
+````
+## Compiling the model
+````python
+model.compile(optimizer='adam', loss='mse')
+````
+## Printing the summary of the model
+````python
+model.summary()
+````
+## Fitting the model
+````python
+model.fit(X_train1,y_train,epochs=100, batch_size=32)
+````
+## Reading the testing dataset
+````python
+dataset_test = pd.read_csv('testset.csv')
+````
+## Selecting all rows and the column with index 1
+````python
+test_set = dataset_test.iloc[:,1:2].values
+````
+## Displaying the shape of the testing data
+````python
+test_set.shape
+````
+## Concatenating the 'Open' columns from testing dataset and training dataset
+````python
+dataset_total = pd.concat((dataset_train['Open'],dataset_test['Open']),axis=0)
+inputs = dataset_total.values
+inputs = inputs.reshape(-1,1)
+````
+## Transforming the inputs
+````python
+inputs_scaled=sc.transform(inputs)
+````
+````python
+X_test = []
+for i in range(60,1384):
+  X_test.append(inputs_scaled[i-60:i,0])
+X_test = np.array(X_test)
+X_test = np.reshape(X_test,(X_test.shape[0], X_test.shape[1],1))
+X_test.shape
+predicted_stock_price_scaled = model.predict(X_test)
+predicted_stock_price = sc.inverse_transform(predicted_stock_price_scaled)
+````
+## Plotting the graph between True Stock Price, Predicted Stock Price vs time
+````python
+plt.plot(np.arange(0,1384),inputs, color='red', label = 'Test(Real) Google stock price')
+plt.plot(np.arange(60,1384),predicted_stock_price, color='blue', label = 'Predicted Google stock price')
+plt.title('Roopak C S\n212223220088\nGoogle Stock Price Prediction')
+plt.xlabel('Time')
+plt.ylabel('Google Stock Price')
+plt.legend()
+plt.show()
 ````
 
+## OUTPUT
 
-## Output
-![image](https://github.com/Sanjushri13/Open-Jacson-Networks/assets/164732231/460a82d6-2bc2-4b4c-9476-986ed42aea68)
+### True Stock Price, Predicted Stock Price vs time
 
+![image](https://github.com/RoopakCS/rnn-stock-price-prediction/assets/139228922/7eda16ef-7d2d-4c8e-8ac6-6a9044a90354)
 
-## Result
-The average number of material in the system and in the conveyor and waiting time are successfully found.
+### Mean Square Error
+
+![image](https://github.com/RoopakCS/rnn-stock-price-prediction/assets/139228922/c6d4d855-dab6-4073-9ddc-a2034d8549c3)
+
+## RESULT
+
+Thus a Recurrent Neural Network model for stock price prediction is developed and implemented successfully.
+
 
