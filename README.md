@@ -134,7 +134,7 @@ predicted_stock_price = sc.inverse_transform(predicted_stock_price_scaled)
 ````python
 plt.plot(np.arange(0,1384),inputs, color='red', label = 'Test(Real) Google stock price')
 plt.plot(np.arange(60,1384),predicted_stock_price, color='blue', label = 'Predicted Google stock price')
-plt.title('Roopak C S\n212223220088\nGoogle Stock Price Prediction')
+plt.title('Kailash Kumar S\n212223220041\nGoogle Stock Price Prediction')
 plt.xlabel('Time')
 plt.ylabel('Google Stock Price')
 plt.legend()
