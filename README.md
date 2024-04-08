@@ -145,11 +145,12 @@ plt.show()
 
 ### True Stock Price, Predicted Stock Price vs time
 
-![image](https://github.com/RoopakCS/rnn-stock-price-prediction/assets/139228922/7eda16ef-7d2d-4c8e-8ac6-6a9044a90354)
+![image](https://github.com/kailash2506/rnn-stock-price-prediction/assets/149034874/2ca51d01-851d-4754-aaf3-8cb523d321c2)
+
 
 ### Mean Square Error
+![image](https://github.com/kailash2506/rnn-stock-price-prediction/assets/149034874/6b16315e-40ba-4543-a7e3-f1dbb36a7ee8)
 
-![image](https://github.com/RoopakCS/rnn-stock-price-prediction/assets/139228922/c6d4d855-dab6-4073-9ddc-a2034d8549c3)
 
 ## RESULT
 
